@@ -36,8 +36,19 @@
 	Workshop > Develop Mods
 3. The mod folder NPCTry should appear, click Build + Reload, this should install the modded NPC in the game
 4. To spawn the NPC, click the left arrow menu at the bottom of the screen.
+
+![image](https://github.com/user-attachments/assets/f6de83f9-1ea3-4c06-8ebd-4c0042e593de)
+
+
 5. In the menus click the green slime button,  to show the NPC Browser.
-6. Search "Antithesis", click it to spawn the NPC.
+
+![image](https://github.com/user-attachments/assets/7efd376d-51cf-4421-9722-7c4e7624c3c8)
+
+
+7. Search "Antithesis", click it to spawn the NPC.
+
+![image](https://github.com/user-attachments/assets/16c1ed9d-2493-4fc9-be11-5beb7a428528)
+
 
 ## Interacting with the NPC:
 - The NPC has four buttons as of now: 
