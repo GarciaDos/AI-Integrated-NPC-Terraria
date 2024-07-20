@@ -12,6 +12,7 @@
 
 ## Required Mods (Install it through the tModLoader workshop or Steam workshop of tModLoader):
 -Hero's Mod (https://steamcommunity.com/sharedfiles/filedetails/?id=2564645933&searchtext=Hero%27s+MOD)
+
 -Cheat Sheet (https://steamcommunity.com/sharedfiles/filedetails/?id=2563784437&searchtext=cheat+sheet)
 
 ## Not needed but recommended to have installed:
