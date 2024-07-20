@@ -1,7 +1,7 @@
 # AI-Integrated-NPC-Terraria
 * For our Thesis
 
-#Setup:
+# Setup:
 
 ## Requirements:
 -Steam
