@@ -35,11 +35,11 @@
 - Once the API is running the web-ui should be accessible when the NPC's chat button is clicked
 
 ## Installing the Modded NPC in Terraria:
-1. To install the mod put the NPCTry folder in the directory:
+1. To install the mod put the AINPC folder in the directory:
 	Documents\My Games\Terraria\tModLoader\ModSources
 2. Once the folder is in the specified directory, open tModLoader then go to the following:
 	Workshop > Develop Mods
-3. The mod folder NPCTry should appear, click Build + Reload, this should install the modded NPC in the game
+3. The mod folder AINPC should appear, click Build + Reload, this should install the modded NPC in the game
 4. To spawn the NPC, click the left arrow menu at the bottom of the screen.
 
 ![image](https://github.com/user-attachments/assets/f6de83f9-1ea3-4c06-8ebd-4c0042e593de)
