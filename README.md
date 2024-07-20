@@ -10,18 +10,20 @@
 -.NET Core
 -Python
 
-## Required Mods (Install it through the tModLoader workshop or Steam worlshop of tModLoader):
--Hero's Mod
--Cheat Sheet
+## Required Mods (Install it through the tModLoader workshop or Steam workshop of tModLoader):
+-Hero's Mod (https://steamcommunity.com/sharedfiles/filedetails/?id=2564645933&searchtext=Hero%27s+MOD)
+-Cheat Sheet (https://steamcommunity.com/sharedfiles/filedetails/?id=2563784437&searchtext=cheat+sheet)
 
 ## Not needed but recommended to have installed:
 -Visual Studio Code
 
 
-## Intallling the API:
+## Intalling the API:
 1. Install the python libraries for API (prefered to be installed in a venv): 
 	pip install torch fastapi pydantic uvicorn numpy
-2. Run the API:
+2. Download the Model checkpoint from Mega, and place it alongside the transformer_chat.py, transformer_model.py, and WORDMAP_corpus.json
+   	(https://mega.nz/file/pvdlzRTA#wAtKnwawnQro5KU_P1XoDeiNaQ45bHlCQSWMpSuYK14)
+4. Run the API:
 	python transformer_chat.py
 
 ![image](https://github.com/user-attachments/assets/e708b788-b5be-4e73-86e8-9fc379527db5)
