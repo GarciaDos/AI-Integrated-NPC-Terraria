@@ -10,7 +10,7 @@
 -.NET Core
 -Python
 
-## Required Mods:
+## Required Mods (Install it through the tModLoader workshop or Steam worlshop of tModLoader):
 -Hero's Mod
 -Cheat Sheet
 
