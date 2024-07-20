@@ -24,7 +24,7 @@
 	pip install torch fastapi pydantic uvicorn numpy
 2. Download the Model checkpoint from Mega, and place it alongside the transformer_chat.py, transformer_model.py, and WORDMAP_corpus.json
    	(https://mega.nz/file/pvdlzRTA#wAtKnwawnQro5KU_P1XoDeiNaQ45bHlCQSWMpSuYK14)
-   ![image](https://github.com/user-attachments/assets/b8293a16-898c-46a0-80f7-200e76ea26c2)
+![image](https://github.com/user-attachments/assets/b8293a16-898c-46a0-80f7-200e76ea26c2)
 
 4. Run the API:
 	python transformer_chat.py
