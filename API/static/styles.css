@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    position: relative; /* Establish relative positioning for child element */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .npc-box, .input-box {
+    border: 2px solid #000;
+    padding: 10px;
+    width: 500px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #aaabf3; /* Add your desired background color here */
+  }
+  
+  .npcName {
+    font-weight: bold; /* Optional: Make the name bold */
+    margin-bottom: 5px; /* Add some margin to separate from the following text */
+  }
+  
+  .input-box input {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+  
+  .npc-portrait {
+    position: absolute; /* Make the portrait absolutely positioned */
+    top: -20%;  /* Position 20% from the top of the container */
+    left: 550px;  /* Position 20px from the right edge of the container */
+    width: 100px;
+    height: auto;
+  }
+  
+  .buttontest {
+    background-color: #316ff5;
+    color: white;
+    border: none;
+    
+    position: absolute;
+    bottom: 20px; /* Position 20px from the bottom of the container */
+    
+    right: 220px;
+    bottom: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

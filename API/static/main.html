@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NPC Interaction</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body style="background-image: url('/static/bg2.png');">
+  <div class="container">
+    <div class="npc-box" id="npcBox">
+      <span id="npcName">Ophelia-Bot</span><br>
+      <span id="npcText">Hello Traveller, What do you seek today?</span>
+    </div>
+    <div class = "input-box">
+      <input type="text" id="questionInput" placeholder="Enter your question">
+      <button class="buttontest" onclick="sendQuestion()">Submit</button>
+    </div>
+    <div class="npc-portrait">
+      <img src="/static/Portrait-beta-4.png" alt="NPC Portrait" id="npcPortrait">
+    </div>
+  </div>
+  <script src="/static/script.js"></script>
+</body>
+</html>
