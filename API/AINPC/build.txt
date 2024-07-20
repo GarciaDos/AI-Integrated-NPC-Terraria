@@ -1,0 +1,3 @@
+displayName = AI Integrated NPC
+author = Nakano, waggleton, Blanccc
+version = 0.1
