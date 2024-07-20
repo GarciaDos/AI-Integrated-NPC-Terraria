@@ -23,6 +23,7 @@
 	pip install torch fastapi pydantic uvicorn numpy
 2. Run the API:
 	python transformer_chat.py
+
 ![image](https://github.com/user-attachments/assets/e708b788-b5be-4e73-86e8-9fc379527db5)
 
 
