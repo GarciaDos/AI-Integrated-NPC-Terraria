@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import json
-from transformer_model import Dataset, MultiHeadAttention, FeedForward, EncoderLayer, DecoderLayer, Embeddings, Transformer, AdamWarmup, LossWithLS, evaluate
+from transformer_model import remove_punc, Dataset, MultiHeadAttention, FeedForward, EncoderLayer, DecoderLayer, Embeddings, Transformer, AdamWarmup, LossWithLS, evaluate
 
 # Loading the model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -41,7 +41,7 @@ class Text_Response(BaseModel):
 
 @app.post("/generate_text", response_model=Text_Response)
 def generate_text(request: Text_Request):
-    question = request.question
+    question = remove_punc(request.question)
 
     max_len = 200
     enc_qus = [word_map.get(word, word_map['<unk>']) for word in question.split()]
