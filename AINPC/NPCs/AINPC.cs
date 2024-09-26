@@ -32,7 +32,9 @@ namespace AINPC.Content.NPCs.TownNPCs
 	public class Antithesis : ModNPC
 	{
         private static readonly HttpClient httpClient = new HttpClient();
-        private string apiResponse = "Hello Traveler.";
+        private string apiResponse = "Missing";
+        private string apiIntent = "Missing";
+        private string Message = "help";
         private static bool isOverlayOpen = false;
 
 
@@ -82,6 +84,15 @@ namespace AINPC.Content.NPCs.TownNPCs
             AnimationType = NPCID.Wizard; //Try animation style of the Wizard//
         }
 
+            public override void AI()
+    {
+        // Call the API periodically or when needed
+        if (Main.GameUpdateCount % 300 == 0) // Every 10 seconds (60 ticks per second)
+        {
+            _ = SendTexttoAPI("onin is that you");
+        }
+    }
+
 
         public async Task SendTexttoAPI(string submitted_text)
         {
@@ -103,7 +114,9 @@ namespace AINPC.Content.NPCs.TownNPCs
                 // Parse the JSON response
                 var jsonResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody);
                 apiResponse = jsonResponse["answer"];
+                apiIntent = jsonResponse["intent"];
                 Main.NewText(apiResponse, Microsoft.Xna.Framework.Color.Orange);
+                Message = "Response: " + apiResponse + ", Intent: " + apiIntent;
             }
 
             catch (HttpRequestException e)
@@ -115,11 +128,7 @@ namespace AINPC.Content.NPCs.TownNPCs
 
         public override string GetChat()
         {
-
-             
-
-                
-            return apiResponse;
+            return Message;
         }
     
 

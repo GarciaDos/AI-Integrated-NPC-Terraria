@@ -7,11 +7,19 @@ import torch.utils.data
 import math
 import torch.nn.functional as F
 
+
 with open('WORDMAP_corpus.json', 'r') as j:
     word_map = json.load(j)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+def remove_punc(string):
+    punctuations = '''!()-{};'"\,<>./?@#$%^&*_~'''
+    no_punct = ""
+    for char in string:
+        if char not in punctuations:
+            no_punct = no_punct + char  # space is also a character
+    return no_punct.lower()
 
 class Dataset(Dataset):
 
