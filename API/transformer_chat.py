@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 import json
 from transformer_model import remove_punc, Dataset, MultiHeadAttention, FeedForward, EncoderLayer, DecoderLayer, Embeddings, Transformer, AdamWarmup, LossWithLS, evaluate
 from Ninobayot.intent_recognition import give_intent
+from Ninobayot.playerimpression import get_player_impression, set_player_impression
 
 # Loading the model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -40,6 +41,7 @@ class Text_Request(BaseModel):
 class Text_Response(BaseModel):
     intent: str
     answer: str
+    PI: str
 
 @app.post("/generate_text", response_model=Text_Response)
 def generate_text(request: Text_Request):
@@ -47,13 +49,16 @@ def generate_text(request: Text_Request):
 
     intent = give_intent(question)
 
+    set_player_impression(intent)
+    PI = get_player_impression()
+
     max_len = 200
     enc_qus = [word_map.get(word, word_map['<unk>']) for word in question.split()]
     question = torch.LongTensor(enc_qus).to(device).unsqueeze(0)
     question_mask = (question != 0).to(device).unsqueeze(1).unsqueeze(1)
     sentence = evaluate(transformer, question, question_mask, int(max_len), word_map)
     
-    return Text_Response(answer=sentence, intent=intent)
+    return Text_Response(answer=sentence, intent=intent, PI = PI)
 
 # Serve the static HTML file
 @app.get("/", response_class=FileResponse)

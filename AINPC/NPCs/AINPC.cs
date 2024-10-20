@@ -34,6 +34,7 @@ namespace AINPC.Content.NPCs.TownNPCs
         private static readonly HttpClient httpClient = new HttpClient();
         private string apiResponse = "Missing";
         private string apiIntent = "Missing";
+        private string apiPI = "Missing";
         private string Message = "help";
         private static bool isOverlayOpen = false;
 
@@ -115,8 +116,9 @@ namespace AINPC.Content.NPCs.TownNPCs
                 var jsonResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody);
                 apiResponse = jsonResponse["answer"];
                 apiIntent = jsonResponse["intent"];
+                apiPI = jsonResponse["PI"];
                 Main.NewText(apiResponse, Microsoft.Xna.Framework.Color.Orange);
-                Message = "Response: " + apiResponse + ", Intent: " + apiIntent;
+                Message = "Response: " + apiResponse + ", Intent: " + apiIntent +", PI: " + apiPI;
             }
 
             catch (HttpRequestException e)
