@@ -25,10 +25,3 @@ def set_player_impression(intent):
     elif intent == "negative":
         if PI_points > -4:  # Decrement if not at min
             PI_points -= 1
-
-# Example usage
-print(get_player_impression())  # Output: "neutral"
-set_player_impression("positive")
-print(get_player_impression())  # Output: "positive"
-set_player_impression("negative")
-print(get_player_impression())  # Output: "neutral"

@@ -68,7 +68,83 @@
           console.error("Error:", error);
       });
     }
+    
 
+  // Function to send a request to the server
+  function notifyServer() {
+    fetch("http://localhost:8000/page_opened", { //change
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({status: "page_opened"})
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Check the 'html_active' status and log the appropriate message // change
+        if (data.html_active === "active") {
+          console.log(data.message);  // Log "webpage active"
+        } else {
+          console.log(data.message);  // Log "webpage inactive"
+        }
+    })
+    .catch(error => {
+        console.error("Error notifying server:", error);
+    });
+  }
+  function get_npc_distance() {
+    fetch("http://localhost:8000/get_npc_location", { //change
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({status: "page_opened"})
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Check the 'html_active' status and log the appropriate message // change
+        // const message = data.message
+        // const npcName = data.npcName
+        // const location = data.location
+        const distance = data.distance
+        console.log(distance)
+        const submitButton = document.querySelector('.buttontest');
+        if (distance > 100) {
+            submitButton.disabled = true; // Disable the button
+            console.log("Button locked: Distance is greater than 100.");
+        } else {
+            submitButton.disabled = false; // Enable the button
+            console.log("Button unlocked: Distance is 100 or less.");
+        
+        } 
+
+         // if (data.html_active === "active") {
+          //console.log(data.message);  // Log "webpage active"
+        //} else {
+          //console.log(data.message);  // Log "webpage inactive" remove later
+        //}
+        
+        //return {"message": "Location received", "npcName": npc_name, "location": location, "distance": distance} equals each
+
+          //const npcintentBox = document.getElementById('npcintentBox')
+        
+    })
+    .catch(error => {
+        console.error("Error notifying server:", error);
+    });
+  }
+
+  // Send the request immediately after the page loads
+  window.onload = function() {
+    notifyServer();
+    get_npc_distance();
+
+    // Check every 3 seconds (3000 milliseconds)
+    setInterval(notifyServer, 3000);
+    setInterval(get_npc_distance, 3000) 
+  };
+
+//here is location
   </script>
 </body>
 </html>

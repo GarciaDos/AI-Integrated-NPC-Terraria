@@ -36,6 +36,7 @@ namespace AINPC.Content.NPCs.TownNPCs
         private string apiIntent = "Missing";
         private string apiPI = "Missing";
         private string Message = "help";
+        private string htmlStatus = "offline";
         private static bool isOverlayOpen = false;
 
 
@@ -87,10 +88,23 @@ namespace AINPC.Content.NPCs.TownNPCs
 
             public override void AI()
     {
+        Player player = Main.LocalPlayer;
+
         // Call the API periodically or when needed
         if (Main.GameUpdateCount % 300 == 0) // Every 10 seconds (60 ticks per second)
         {
             _ = SendTexttoAPI("onin is that you");
+            
+        }
+
+        if (Main.GameUpdateCount % 60 == 0) // Every 10 seconds (60 ticks per second)
+        {
+            _ = SendLoctoAPI(player);
+        }
+
+        if (Main.GameUpdateCount % 120 == 0) // Every 10 seconds (60 ticks per second)
+        {
+            _ = CheckHtmlStatus();
         }
     }
 
@@ -127,6 +141,72 @@ namespace AINPC.Content.NPCs.TownNPCs
                 Main.NewText(apiResponse, Microsoft.Xna.Framework.Color.Orange);
         }
         }
+    public async Task CheckHtmlStatus()
+{
+    try
+    {
+        var requestBody = new
+        {
+            status = "check"
+        };
+
+        string jsonString = JsonSerializer.Serialize(requestBody);
+        StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+        HttpResponseMessage response = await httpClient.PostAsync("http://localhost:8000/page_opened", content);
+        response.EnsureSuccessStatusCode();
+
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        // Parse the JSON response
+        var jsonResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody);
+        htmlStatus = jsonResponse["html_status"];
+        string message = jsonResponse["message"];
+        string htmlActive = jsonResponse["html_active"];
+        Message = "htmlStatus: " + htmlStatus + ", message: " + message +", htmlActive: " + jsonResponse;
+        Main.NewText(Message, Microsoft.Xna.Framework.Color.Orange);
+    }
+    catch (Exception ex)
+    {
+            apiResponse = "Error fetching dialogue.";
+            Main.NewText(apiResponse, Microsoft.Xna.Framework.Color.Orange);
+    }
+}
+
+        public async Task SendLoctoAPI(Player player) //Send location to API
+        {
+            try
+            {
+                float distanceToTarget = NPC.Center.Distance(player.Center);
+
+                var requestBody = new
+                {
+                    message  = "test",
+                    npcName = "Antithesis",
+                    location = new
+                    {
+                        x = NPC.position.X,
+                        y = NPC.position.Y
+                    },
+                    distanceToTarget
+                };
+
+                string jsonString = JsonSerializer.Serialize(requestBody);
+                StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await httpClient.PostAsync("http://localhost:8000/npc_location", content);
+                response.EnsureSuccessStatusCode();
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Main.NewText($"Location Sent: {responseBody}", Microsoft.Xna.Framework.Color.Green);
+            }
+
+            catch (HttpRequestException e)
+            {
+                
+                Main.NewText("Error Sending Location.", Microsoft.Xna.Framework.Color.Red);
+        }
+        }
 
         public override string GetChat()
         {
@@ -157,8 +237,17 @@ namespace AINPC.Content.NPCs.TownNPCs
             else
             {
                 string url = @"http://localhost:8000/";
-                SteamFriends.ActivateGameOverlayToWebPage(url);
-                isOverlayOpen = true;
+                    
+                    if (htmlStatus == "online")
+                    {
+                        SteamFriends.ActivateGameOverlay("Friends");
+                        isOverlayOpen = true;
+                    }
+                    else if (htmlStatus == "offline")
+                    {
+                        SteamFriends.ActivateGameOverlayToWebPage(url);
+                        isOverlayOpen = true;
+                    }
             }
         }
 
