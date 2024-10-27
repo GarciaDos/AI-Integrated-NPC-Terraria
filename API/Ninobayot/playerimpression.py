@@ -5,7 +5,7 @@ def get_player_impression():
     global PI_points  # Declare PI_points as global to access the global variable
     global Player_Impression  # Declare Player_Impression as global
 
-    if -4 <= PI_points < -2:
+    if -4 <= PI_points <= -2:
         Player_Impression = "negative"
     elif -1 <= PI_points <= 1:
         Player_Impression = "neutral"

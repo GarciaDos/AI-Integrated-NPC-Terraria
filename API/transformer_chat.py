@@ -26,6 +26,7 @@ html_status = "offline"
 npc_name = "null"
 location =  {}
 distance = 0.0
+PI = "neutral"
 
 with open('WORDMAP_corpus.json', 'r') as j:
     word_map = json.load(j)
@@ -56,6 +57,9 @@ class Text_Response(BaseModel):
     answer: str
     PI: str
 
+class Bossdead_status(BaseModel):
+    bossStatus: str
+
 class NPCLocRequest(BaseModel): #Location Request
     npcName: str
     location: dict
@@ -68,6 +72,9 @@ class HTML_Check_Status(BaseModel):
     message: str
     html_active: str
     html_status: str  # Assuming this field exists based on the error message
+
+class send_PI(BaseModel):
+    PI: str
 
 
 @app.post("/npc_location")
@@ -96,9 +103,12 @@ def get_npc_location(data: dict):
 
 @app.post("/generate_text", response_model=Text_Response)
 def generate_text(request: Text_Request):
+    global PI
+
     question = remove_punc(request.question)
 
     intent = give_intent(question)
+
 
     set_player_impression(intent)
     PI = get_player_impression()
@@ -110,6 +120,18 @@ def generate_text(request: Text_Request):
     sentence = evaluate(transformer, question, question_mask, int(max_len), word_map)
     
     return Text_Response(answer=sentence, intent=intent, PI = PI)
+
+@app.post("/Bossdead", response_model=Bossdead_status)
+def Bossdead(data: Bossdead_status):
+    print("Received Boss status:", data.bossStatus)
+    return Bossdead_status(bossStatus="Progression updated successfully.")
+
+#get PI
+@app.get("/get_PI")
+def read_index():
+    global PI
+    sendPI = PI
+    return send_PI(PI = sendPI)
 
 # Serve the static HTML file
 @app.get("/", response_class=FileResponse)
