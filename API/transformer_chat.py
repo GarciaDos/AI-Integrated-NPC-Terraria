@@ -15,7 +15,7 @@ from pydantic import BaseModel
 
 # Loading the model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-checkpoint = torch.load('checkpoint_499.pth.tar', map_location=torch.device('cpu'))
+checkpoint = torch.load('checkpoint_300.pth.tar', map_location=torch.device('cpu'))
 transformer = checkpoint['transformer']
 
 #Storing html activity
@@ -27,6 +27,7 @@ npc_name = "null"
 location =  {}
 distance = 0.0
 PI = "neutral"
+PHASE = "null"
 
 with open('WORDMAP_corpus.json', 'r') as j:
     word_map = json.load(j)
@@ -104,6 +105,7 @@ def get_npc_location(data: dict):
 @app.post("/generate_text", response_model=Text_Response)
 def generate_text(request: Text_Request):
     global PI
+    global PHASE
 
     question = remove_punc(request.question)
 
@@ -112,6 +114,9 @@ def generate_text(request: Text_Request):
 
     set_player_impression(intent)
     PI = get_player_impression()
+
+    player_prompt = f" [PI:{PI}, PHASE:{PHASE}] {question}"
+    question = remove_punc(player_prompt)
 
     max_len = 200
     enc_qus = [word_map.get(word, word_map['<unk>']) for word in question.split()]
@@ -123,6 +128,10 @@ def generate_text(request: Text_Request):
 
 @app.post("/Bossdead", response_model=Bossdead_status)
 def Bossdead(data: Bossdead_status):
+    global PHASE
+
+    PHASE = data.bossStatus
+
     print("Received Boss status:", data.bossStatus)
     return Bossdead_status(bossStatus="Progression updated successfully.")
 

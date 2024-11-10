@@ -238,7 +238,6 @@ def evaluate(transformer, question, question_mask, max_len, word_map):
     """
     Performs Greedy Decoding with a batch size of 1
     """
-    
     rev_word_map = {v: k for k, v in word_map.items()}
     transformer.eval()
     start_token = word_map['<start>']
