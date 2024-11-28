@@ -1,38 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <style>
-  .typewriter{
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid #ffa500; /* The typwriter cursor */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
-  animation: 
-    typing 3.5s steps(40, end),
-    blink-caret .75s step-end infinite;
 
-  
-}
-
-/* The typing effect */
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: orange; }
-}
-  </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NPC Interaction</title>
   <link rel="stylesheet" href="/static/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 </head>
-<body style="background-image: url('/static/bg2.png');">
+<body style="background-image: url('/static/bg-morning.png'); background-repeat: no-repeat; background-size: cover;">
   <div class="container">
     
 
@@ -49,7 +25,8 @@
       <button class="buttontest" onclick="sendQuestion()">Submit</button>
     </div>
     <div class="npc-portrait">
-      <img src="static\12.png" alt="NPC Portrait" id="npcPortrait" width="400%" height="750%">
+      <img src="static\ophelia-neutral-d.png" alt="NPC Portrait" id="npcPortrait" width="860%" height="150%" style="margin-left: -295px; margin-top: -40px;"> 
+    
     </div>
   </div>
 
@@ -72,7 +49,7 @@
       .then(response => response.json())
       .then(responseData => {
           const answer = responseData.answer;
-          const intent = responseData.intent;
+          const intent = responseData.PI;
           const npcBox = document.getElementById('npcBox');
           const npcintentBox = document.getElementById('npcintentBox')
           
@@ -80,22 +57,20 @@
 
           // Assuming `npcText` is the element displaying your text
           const npcText = document.getElementById("npcText");
+          npcText.innerHTML = answer;
 
-          // Function to update and restart animation
-          function updateTextWithAnimation(newText) {
-            // Temporarily remove the class to reset animation
-            npcText.classList.remove("typewriter");
+          
 
-            // Trigger reflow to restart the animation
-            void npcText.offsetWidth; // This forces the browser to reflow
-
-            // Re-add the class and set new text
-            npcText.classList.add("typewriter");
-            npcText.innerHTML = newText;
+          if (intent === "neutral") {
+            npcPortrait.src = "static/ophelia-neutral-d.png";
+            npcPortrait.alt = "Neutral Ophelia";
+          } else if (intent === "negative") {
+            npcPortrait.src = "static/ophelia-nega-d.png";
+            npcPortrait.alt = "Negative Ophelia";
+          } else if (intent === "positive") {
+            npcPortrait.src = "static/ophelia-happy-d.png";
+            npcPortrait.alt = "Happy Ophelia";
           }
-
-          // Call this function with the new answer text
-          updateTextWithAnimation(answer);
       })
       .catch(error => {
           console.error("Error:", error);

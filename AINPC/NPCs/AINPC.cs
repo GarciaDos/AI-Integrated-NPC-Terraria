@@ -95,12 +95,6 @@ namespace AINPC.Content.NPCs.TownNPCs
             {
                 Player player = Main.LocalPlayer;
 
-                // Call the API periodically or when needed
-                if (Main.GameUpdateCount % 300 == 0) // Every 10 seconds (60 ticks per second)
-                {
-                    _ = SendTexttoAPI("onin is that you");
-
-                }
 
                 if (Main.GameUpdateCount % 60 == 0) // Every 10 seconds (60 ticks per second)
                 {
@@ -452,7 +446,7 @@ public string BossDefeated()
 
             public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
             {
-                projType = ProjectileID.MagicMissile;
+                projType = ProjectileID.Electrosphere;
                 attackDelay = 1;
             }
 
@@ -467,6 +461,13 @@ public string BossDefeated()
             {
                 auraLightMultiplier = 1f;
             }
+
+            public override void TownNPCAttackStrength(ref int damage, ref float knockback)
+            {
+                damage = 15;
+                knockback = 2f;
+            }
+            
 
             public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
             {
