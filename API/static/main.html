@@ -31,6 +31,64 @@
   </div>
 
   <script>
+    function getTimeOfDayFromAPI() {
+      fetch("http://localhost:8000/get_time", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          dayTime: new Date().getHours() >= 6 && new Date().getHours() < 18  // Check if it's day or night based on local time
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+      
+        let timeOfDay = data.time_of_day; // "morning" or "night"
+        let debugtimeOfDay = "time:" + data.time_of_day;
+        let PI = data.PI  
+        console.log(debugtimeOfDay)
+        console.log("PI: " + PI)
+        updateNpcImage(timeOfDay, PI);
+        updateBackground(timeOfDay);
+      })
+      .catch(error => {
+        console.error("Error fetching time of day:", error);
+      });
+    }
+
+    // Function to update NPC portrait based on time of day and intent
+    function updateNpcImage(timeOfDay, PI) {
+      let npcPersonality = PI;  // This can be dynamically set based on the intent (neutral, positive, negative)
+
+      let imageFileName = getImageBasedOnTimeAndPersonality(npcPersonality, timeOfDay);
+      document.getElementById("npcPortrait").src = "static/" + imageFileName;
+    }
+
+    // Function to determine the NPC image file based on personality and time of day
+    function getImageBasedOnTimeAndPersonality(personality, timeOfDay) {
+      if (personality === "positive") {
+        return timeOfDay === "morning" ? "ophelia-happy-d.png" : "ophelia-happy-n.png";
+      } else if (personality === "negative") {
+        return timeOfDay === "morning" ? "ophelia-nega-d.png" : "ophelia-nega-n.png";
+      } else { // neutral
+        return timeOfDay === "morning" ? "ophelia-neutral-d.png" : "ophelia-neutral-n.png";
+      }
+    }
+
+    // Update the background image based on time of day
+    function updateBackground(timeOfDay) {
+      const bodyElement = document.body;
+      if (timeOfDay === "morning") {
+        bodyElement.style.backgroundImage = "url('/static/bg-morning.png')";
+      } else if (timeOfDay === "night") {
+        bodyElement.style.backgroundImage = "url('/static/bg-night.png')";
+      }
+    }
+
+
+
+
     function sendQuestion() {
       const questionInput = document.getElementById('questionInput').value;
 
@@ -61,16 +119,16 @@
 
           
 
-          if (intent === "neutral") {
-            npcPortrait.src = "static/ophelia-neutral-d.png";
-            npcPortrait.alt = "Neutral Ophelia";
-          } else if (intent === "negative") {
-            npcPortrait.src = "static/ophelia-nega-d.png";
-            npcPortrait.alt = "Negative Ophelia";
-          } else if (intent === "positive") {
-            npcPortrait.src = "static/ophelia-happy-d.png";
-            npcPortrait.alt = "Happy Ophelia";
-          }
+          // if (intent === "neutral") {
+          //   npcPortrait.src = "static/ophelia-neutral-d.png";
+          //   npcPortrait.alt = "Neutral Ophelia";
+          // } else if (intent === "negative") {
+          //   npcPortrait.src = "static/ophelia-nega-d.png";
+          //   npcPortrait.alt = "Negative Ophelia";
+          // } else if (intent === "positive") {
+          //   npcPortrait.src = "static/ophelia-happy-d.png";
+          //   npcPortrait.alt = "Happy Ophelia";
+          // }
       })
       .catch(error => {
           console.error("Error:", error);
@@ -149,7 +207,8 @@
 
     // Check every 3 seconds (3000 milliseconds)
     setInterval(notifyServer, 3000);
-    setInterval(get_npc_distance, 3000) 
+    setInterval(get_npc_distance, 3000);
+    setInterval(getTimeOfDayFromAPI, 500); 
   };
 
 //here is location

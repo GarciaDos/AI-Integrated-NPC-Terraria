@@ -19,11 +19,11 @@
 -Visual Studio Code
 
 
-## Intalling the API:
+## Installing the API:
 1. Install the python libraries for API (prefered to be installed in a venv): 
-	pip install torch fastapi pydantic uvicorn numpy
+	pip install torch fastapi pydantic uvicorn numpy pandas nltk
 2. Download the Model checkpoint from Mega, and place it alongside the transformer_chat.py, transformer_model.py, and WORDMAP_corpus.json
-   	(https://mega.nz/file/pvdlzRTA#wAtKnwawnQro5KU_P1XoDeiNaQ45bHlCQSWMpSuYK14)
+   	(https://drive.google.com/drive/folders/15HOCRB5D8WGKCd_gj3NFNR94YOKHnQXR?usp=drive_link)
 ![image](https://github.com/user-attachments/assets/b8293a16-898c-46a0-80f7-200e76ea26c2)
 
 4. Run the API:
@@ -35,22 +35,30 @@
 - Once the API is running the web-ui should be accessible when the NPC's chat button is clicked
 
 ## Installing the Modded NPC in Terraria:
+# Installing through Steam workshop (Recommended):
+1. Subscribing the mod will add it automatically to tModLoader:
+   https://steamcommunity.com/sharedfiles/filedetails/?id=3299231140
+2. Check if it is enabled by going to the mod list
+   
+# Installing Manually:
 1. To install the mod put the NPCTry folder in the directory:
 	Documents\My Games\Terraria\tModLoader\ModSources
 2. Once the folder is in the specified directory, open tModLoader then go to the following:
 	Workshop > Develop Mods
 3. The mod folder NPCTry should appear, click Build + Reload, this should install the modded NPC in the game
-4. To spawn the NPC, click the left arrow menu at the bottom of the screen.
+
+## Spawn the NPC
+1. To spawn the NPC, click the left arrow menu at the bottom of the screen.
 
 ![image](https://github.com/user-attachments/assets/f6de83f9-1ea3-4c06-8ebd-4c0042e593de)
 
 
-5. In the menus click the green slime button,  to show the NPC Browser.
+2. In the menus click the green slime button,  to show the NPC Browser.
 
 ![image](https://github.com/user-attachments/assets/7efd376d-51cf-4421-9722-7c4e7624c3c8)
 
 
-7. Search "Antithesis", click it to spawn the NPC.
+3. Search "Antithesis", click it to spawn the NPC.
 
 ![image](https://github.com/user-attachments/assets/16c1ed9d-2493-4fc9-be11-5beb7a428528)
 

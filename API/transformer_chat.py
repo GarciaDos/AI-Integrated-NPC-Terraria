@@ -12,6 +12,7 @@ from Ninobayot.intent_recognition import give_intent
 from Ninobayot.playerimpression import get_player_impression, set_player_impression
 from datetime import datetime, timedelta
 from pydantic import BaseModel
+from datetime import datetime, timedelta
 
 # Loading the model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -28,6 +29,7 @@ location =  {}
 distance = 0.0
 PI = "neutral"
 PHASE = "null"
+time_of_day = "null"
 
 with open('WORDMAP_corpus.json', 'r') as j:
     word_map = json.load(j)
@@ -77,6 +79,28 @@ class HTML_Check_Status(BaseModel):
 class send_PI(BaseModel):
     PI: str
 
+class TimeRequest(BaseModel):
+    dayTime: bool
+
+
+@app.post("/check_time")
+async def check_time(request: TimeRequest):
+    global time_of_day
+    if request.dayTime:
+        time_of_day = "morning"
+    else:
+        time_of_day = "night"
+    
+    return {"time_of_day": time_of_day}
+
+@app.post("/get_time")
+def get_time():
+
+    global time_of_day
+    global PI
+    sendPI = PI
+
+    return {"time_of_day": time_of_day , "PI": sendPI}
 
 @app.post("/npc_location")
 def npc_location(request: NPCLocRequest):
